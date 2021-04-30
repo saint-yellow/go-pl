@@ -1,0 +1,72 @@
+[ 0:00] The animals are sleeping.
+[ 1:00] The animals are sleeping.
+[ 2:00] The animals are sleeping.
+[ 3:00] The animals are sleeping.
+[ 4:00] The animals are sleeping.
+[ 5:00] The animals are sleeping.
+[ 6:00] The animals are sleeping.
+[ 7:00] The animals are sleeping.
+[ 8:00] Buzz Lightyear files to infinity and beyond.
+[ 9:00] Go gopher eats the corn.
+[10:00] Go gopher scurries along the ground.
+[11:00] Buzz Lightyear buzzes about.
+[12:00] Go gopher eats the radish.
+[13:00] Buzz Lightyear buzzes about.
+[14:00] Go gopher scurries along the ground.
+[15:00] Go gopher burrows in the sand.
+[16:00] Buzz Lightyear eats the nectar.
+[17:00] Buzz Lightyear buzzes about.
+[18:00] The animals are sleeping.
+[19:00] The animals are sleeping.
+[20:00] The animals are sleeping.
+[21:00] The animals are sleeping.
+[22:00] The animals are sleeping.
+[23:00] The animals are sleeping.
+[ 0:00] The animals are sleeping.
+[ 1:00] The animals are sleeping.
+[ 2:00] The animals are sleeping.
+[ 3:00] The animals are sleeping.
+[ 4:00] The animals are sleeping.
+[ 5:00] The animals are sleeping.
+[ 6:00] The animals are sleeping.
+[ 7:00] The animals are sleeping.
+[ 8:00] Buzz Lightyear buzzes about.
+[ 9:00] Go gopher eats the lettuce.
+[10:00] Go gopher eats the root.
+[11:00] Go gopher eats the root.
+[12:00] Go gopher eats the lettuce.
+[13:00] Buzz Lightyear files to infinity and beyond.
+[14:00] Go gopher scurries along the ground.
+[15:00] Go gopher eats the lettuce.
+[16:00] Go gopher eats the carrot.
+[17:00] Buzz Lightyear eats the pollen.
+[18:00] The animals are sleeping.
+[19:00] The animals are sleeping.
+[20:00] The animals are sleeping.
+[21:00] The animals are sleeping.
+[22:00] The animals are sleeping.
+[23:00] The animals are sleeping.
+[ 0:00] The animals are sleeping.
+[ 1:00] The animals are sleeping.
+[ 2:00] The animals are sleeping.
+[ 3:00] The animals are sleeping.
+[ 4:00] The animals are sleeping.
+[ 5:00] The animals are sleeping.
+[ 6:00] The animals are sleeping.
+[ 7:00] The animals are sleeping.
+[ 8:00] Go gopher eats the corn.
+[ 9:00] Go gopher eats the carrot.
+[10:00] Go gopher eats the lettuce.
+[11:00] Buzz Lightyear buzzes about.
+[12:00] Go gopher eats the lettuce.
+[13:00] Buzz Lightyear files to infinity and beyond.
+[14:00] Go gopher eats the lettuce.
+[15:00] Buzz Lightyear buzzes about.
+[16:00] Go gopher burrows in the sand.
+[17:00] Go gopher burrows in the sand.
+[18:00] The animals are sleeping.
+[19:00] The animals are sleeping.
+[20:00] The animals are sleeping.
+[21:00] The animals are sleeping.
+[22:00] The animals are sleeping.
+[23:00] The animals are sleeping.

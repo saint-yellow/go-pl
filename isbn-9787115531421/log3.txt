@@ -1,0 +1,36 @@
+[{Brabury Landing -4.5895 137.4417} {Columbia Memorial Station -14.5684 175.472636} {Challenger Memorial Station -1.9462 354.4734}]
+[
+	{
+		"name": "Brabury Landing",
+		"latitude": -4.5895,
+		"longitude": 137.4417
+	},
+	{
+		"name": "Columbia Memorial Station",
+		"latitude": -14.5684,
+		"longitude": 175.472636
+	},
+	{
+		"name": "Challenger Memorial Station",
+		"latitude": -1.9462,
+		"longitude": 354.4734
+	}
+]
+{Brabury Landing -4.5895 137.4417}
+{
+	"name": "Brabury Landing",
+	"latitude": -4.5895,
+	"longitude": 137.4417
+}
+{Columbia Memorial Station -14.5684 175.472636}
+{
+	"name": "Columbia Memorial Station",
+	"latitude": -14.5684,
+	"longitude": 175.472636
+}
+{Challenger Memorial Station -1.9462 354.4734}
+{
+	"name": "Challenger Memorial Station",
+	"latitude": -1.9462,
+	"longitude": 354.4734
+}
