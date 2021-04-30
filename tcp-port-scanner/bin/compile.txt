@@ -1,0 +1,10 @@
+non-concurrent:
+go build -o .\bin\tcp-scanner-nonconcurrent.exe src\nonconcurrent\
+
+
+concurrent:
+go build -o .\bin\tcp-scanner-concurrent.exe src\concurrent\
+
+
+workerpool:
+go build -o .\bin\tcp-scanner-workerpool.exe src\workerpool\
