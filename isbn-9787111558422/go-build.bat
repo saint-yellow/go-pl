@@ -1,1 +1,0 @@
-go build -o bin\%2.exe src\%1\%2\%2.go

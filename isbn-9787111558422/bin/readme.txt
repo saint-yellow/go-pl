@@ -1,1 +1,0 @@
-Put your binary files to this folder.
