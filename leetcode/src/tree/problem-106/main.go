@@ -9,6 +9,10 @@ type TreeNode struct {
 }
 
 func buildTree(inorder []int, postorder []int) *TreeNode {
+	return method1(inorder, postorder)
+}
+
+func method1(inorder, postorder []int) *TreeNode {
 	mapping := make(map[int]int)
 	for i, v := range inorder {
 		mapping[v] = i
