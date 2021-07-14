@@ -1,9 +1,8 @@
 package main
 
-type ListNode struct {
-	Val int
-	Next *ListNode
-}
+import "github.com/saint-yellow/go-pl/leetcode/src/linked_list/ds"
+
+type ListNode = ds.SinglyLinkedNode
 
 func hasCycle(head *ListNode) bool {
     nodeMap := make(map[*ListNode]int)

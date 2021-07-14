@@ -1,11 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
 
-type Node struct {
-	Val int
-	Children []*Node
-}
+	"github.com/saint-yellow/go-pl/leetcode/src/tree/ds"
+)
+
+type Node = ds.NAryNode
 
 func levelOrder(root *Node) [][]int {
 	return method1(root)

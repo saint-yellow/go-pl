@@ -1,12 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
 
-type TreeNode struct {
-	Val int
-	Left *TreeNode
-	Right *TreeNode
-}
+	"github.com/saint-yellow/go-pl/leetcode/src/tree/ds"
+)
+
+type TreeNode = ds.BinaryNode
 
 func levelOrder(root *TreeNode) [][]int {
 	return method1(root)

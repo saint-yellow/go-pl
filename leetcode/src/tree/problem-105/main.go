@@ -2,11 +2,9 @@
 
 package main
 
-type TreeNode struct {
-	Val int
-	Left *TreeNode
-	Right *TreeNode
-}
+import "github.com/saint-yellow/go-pl/leetcode/src/tree/ds"
+
+type TreeNode = ds.BinaryNode
 
 func buildTree(preorder []int, inorder []int) *TreeNode {
 	return method1(preorder, inorder)
