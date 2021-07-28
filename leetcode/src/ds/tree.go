@@ -111,6 +111,10 @@ func (root *BinaryNode) TwoDimensionalBFT() [][]int {
 	return result
 }
 
+func BuildBinaryTree(values []int) *BinaryNode {
+	return &BinaryNode{Val: -1}
+}
+
 type NAryNode struct {
 	Val int
 	Children []*NAryNode
