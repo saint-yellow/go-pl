@@ -1,6 +1,6 @@
 package main
 
-import "github.com/saint-yellow/go-pl/leetcode/src/linked_list/ds"
+import "github.com/saint-yellow/go-pl/leetcode/src/ds"
 
 type ListNode = ds.SinglyLinkedNode
 

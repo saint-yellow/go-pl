@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/saint-yellow/go-pl/leetcode/src/tree/ds"
+	"github.com/saint-yellow/go-pl/leetcode/src/ds"
 )
 
 type TreeNode = ds.BinaryNode
