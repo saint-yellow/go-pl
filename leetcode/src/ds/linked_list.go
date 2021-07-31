@@ -35,6 +35,26 @@ func (node *SinglyLinkedNode) Length() int {
 	return count
 }
 
+type SinglyLinkedList struct {
+	sentinel *SinglyLinkedNode
+}
+
+func InitSinglyLinkedList() SinglyLinkedList {
+	return SinglyLinkedList{
+		sentinel: &SinglyLinkedNode{
+			Val: -1,
+		},
+	}
+}
+
+func (s *SinglyLinkedList) Extend(values []int) {
+	pointer := s.sentinel
+	for pointer.Next != nil {
+		pointer = pointer.Next
+	}
+	pointer.Next = BuildSinglyLinkedList(values)
+} 
+
 
 type DoublyLinkedNode struct {
 	Val int
