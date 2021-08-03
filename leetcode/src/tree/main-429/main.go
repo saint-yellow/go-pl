@@ -61,6 +61,35 @@ func method2(root *Node) [][]int {
 	return result
 }
 
+func method3(root *Node) [][]int {
+	var bfs func(root *Node, result *[][]int)
+	bfs = func(root *Node, result *[][]int) {
+		queue := make([]*Node, 0)
+		if root != nil {
+			queue = append(queue, root)
+		}
+
+		for len(queue) > 0 {
+			size := len(queue)
+			level := new([]int)
+
+			for i := 0; i < size; i++ {
+				node := queue[0]
+				queue = queue[1:]
+				*level = append(*level, node.Val)
+				if node.Children != nil {
+					queue = append(queue, node.Children...)
+				}
+			}
+			*result = append(*result, *level)
+		}
+	}
+
+	result := make([][]int, 0)
+	bfs(root, &result)
+	return result
+}
+
 func main() {
 	tree := &Node{
 		Val: 1,

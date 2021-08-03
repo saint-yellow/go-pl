@@ -16,13 +16,10 @@ func method1(s string) [][]string {
 	}
 
 	isPalindrome := func(left, right int) bool {
-		for left < right {
-			if s[left] != s[right] {
+		for i, j := left, right; i < j; i, j = i+1, j-1 {
+			if s[i] != s[j] {
 				return false
 			}
-
-			left += 1
-			right -= 1
 		}
 		return true
 	}
