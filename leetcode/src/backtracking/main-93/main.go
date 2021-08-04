@@ -4,62 +4,58 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
-// func restoreIpAddresses(s string) []string {
-// 	return method1(s)
-// }
 
-// func method1(s string) []string {
-// 	result := make([]string, 0)
 
-// 	isValid := func(s string, start, end int) bool {
-// 		if start > end {
-// 			return false
-// 		}
+func restoreIpAddresses(s string) []string {
+	return method1(s)
+}
 
-// 		if s[start] == '0' && start != end {
-// 			return false
-// 		}
+func method1(s string) []string {
+	result, path := make([]string, 0), make([]string, 0)
 
-// 		number := 0
-// 		for i := start; i <= end; i++ {
-// 			if s[i] > '9' || s[i] < '0' {
-// 				return false
-// 			}
+	isValidIP := func(s string, startIndex, end int) bool {
+		checkInt, _ := strconv.Atoi(s[startIndex:end+1])
+		if end - startIndex + 1 > 1 && s[startIndex] == '0' {
+			return false
+		}
+		if checkInt > 255 {
+			return false
+		}
 
-// 			number = number * 10 + int(s[i] - '0')
-// 			if number > 255 {
-// 				return false
-// 			}
-// 		}
+		return true
+	}
 
-// 		return true
-// 	}
+	var backtracking func(s string, path []string, startIndex int, result *[]string)
+	backtracking = func(s string, path []string, startIndex int, result *[]string) {
+		if startIndex == len(s) && len(path) == 4 {
+			temp := strings.Join(path, ".")
+			*result = append(*result, temp)
+		}
 
-// 	var backtracking func(s string, startIndex, dotNumber int)
-// 	backtracking = func(s string, startIndex, dotNumber int) {
-// 		if dotNumber == 3 {
-// 			if isValid(s, startIndex, len(s)-1) {
-// 				result = append(result, s)
-// 			}
-// 			return
-// 		}
+		for i := startIndex; i < len(s); i++ {
+			path = append(path, s[startIndex:i+1])
+			if i - startIndex + 1 <= 3 && len(path) <= 4 && isValidIP(s, startIndex, i) {
+				backtracking(s, path, i+1, result)
+			} else {
+				return
+			}
 
-// 		for i := startIndex; i < len(s); i++ {
-// 			if isValid(s, startIndex, i) {
+			path = path[:len(path)-1]
+		}
+	}
 
-// 			}
-// 		}
-// 	}
-// }
+	if s == "" || len(s) > 12 {
+		return result
+	}
 
+	backtracking(s, path, 0, &result)
+	return result
+}
 
 func main() {
-	s := strings.Split("saintyellow", "")
-	s = append(s, "")
-	copy(s[6:], s[5:11])
-	s[5] = "-"
-	fmt.Println(s)
+	fmt.Println(restoreIpAddresses("25525511135"))
 }
