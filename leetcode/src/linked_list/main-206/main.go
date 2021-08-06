@@ -37,6 +37,16 @@ func method2(head * ListNode) *ListNode {
 	return reversedHead
 }
 
+func method3(previous, current *ListNode) *ListNode {
+	if current == nil {
+		return current
+	}
+
+	next := current.Next
+	current.Next = previous
+	return method3(current, next)
+}
+
 func main() {
 	values := []int{1, 2, 3, 4, 5}
 	list := ds.BuildSinglyLinkedList(values)
