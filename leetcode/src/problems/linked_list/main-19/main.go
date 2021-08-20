@@ -53,12 +53,13 @@ func method3(head *ListNode, n int) *ListNode {
 		Next: head,
 	}
 	slow, fast := sentinel, sentinel.Next
-	for i := 0; i < n; i++ {
-		fast = fast.Next
-	}
+	i := 1
 	for fast != nil {
 		fast = fast.Next
-		slow = slow.Next
+		if i > n {
+			slow = slow.Next
+		}
+		i++
 	}
 	slow.Next = slow.Next.Next
 	return sentinel.Next

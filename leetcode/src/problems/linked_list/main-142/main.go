@@ -30,3 +30,25 @@ func method1(head *ListNode) *ListNode {
 	}
 	return slow
 }
+
+func method2(head *ListNode) *ListNode {
+	fast, slow := head, head
+
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+
+		if slow == fast {
+			p, q := head, slow
+
+			for p != q {
+				p = p.Next
+				q = q.Next
+			}
+			
+			return p
+		}
+	}
+
+	return nil
+}
