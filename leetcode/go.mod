@@ -1,3 +1,3 @@
 module github.com/saint-yellow/go-pl/leetcode
 
-go 1.16
+go 1.17
