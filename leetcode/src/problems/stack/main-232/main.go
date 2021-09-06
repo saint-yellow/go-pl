@@ -30,7 +30,7 @@ func (q *MyQueue) Peek() int {
 	return q.head(false)
 }
 
-// 如果队列为空，返回 true ；否则，返回 false
+// 如果队列为空，返回 true；否则，返回 false
 func (q *MyQueue) Empty() bool {
 	return (len(q.inputStack) == 0 && len(q.outputStack) == 0)
 }
