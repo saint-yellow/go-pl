@@ -10,7 +10,7 @@ import (
 
 type TreeNode = ds.BinaryNode
 
-func preorderTraversal(root *TreeNode) []int {
+func preOrderTraversal(root *TreeNode) []int {
 	return method2(root)
 }
 
@@ -21,8 +21,8 @@ func method1(root *TreeNode) []int {
 	}
 
 	result = append(result, root.Val)
-	result = append(result, preorderTraversal(root.Left)...)
-	result = append(result, preorderTraversal(root.Right)...)
+	result = append(result, preOrderTraversal(root.Left)...)
+	result = append(result, preOrderTraversal(root.Right)...)
 	return result
 }
 
@@ -75,5 +75,5 @@ func main() {
 			Right: nil,
 		},
 	}
-	fmt.Println(preorderTraversal(tree))
+	fmt.Println(preOrderTraversal(tree))
 }

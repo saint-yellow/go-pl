@@ -6,7 +6,7 @@ import "github.com/saint-yellow/go-pl/leetcode/src/ds"
 
 type Node = ds.NAryNode
 
-func preorder(root *Node) []int {
+func preOrder(root *Node) []int {
 	return method1(root)
 }
 

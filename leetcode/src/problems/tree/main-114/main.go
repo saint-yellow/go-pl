@@ -11,7 +11,20 @@ func flatten(root *TreeNode) {
 }
 
 func method1(root *TreeNode) {
-	preOrder := preOrderTraversal(root)
+	var traversal func(node *TreeNode) []*TreeNode
+	traversal = func(node *TreeNode) []*TreeNode {
+		result := make([]*TreeNode, 0)
+		if node == nil {
+			return result
+		}
+
+		result = append(result, node)
+		result = append(result, traversal(node.Left)...)
+		result = append(result, traversal(node.Right)...)
+		return result
+	}
+
+	preOrder := traversal(root)
 	n := len(preOrder)
 	if n == 0 {
 		return
@@ -22,18 +35,6 @@ func method1(root *TreeNode) {
 		preOrder[i - 1].Right = preOrder[i]
 	}
 	
-}
-
-func preOrderTraversal(root *TreeNode) []*TreeNode {
-	result := make([]*TreeNode, 0)
-	if root == nil {
-		return result
-	}
-
-	result = append(result, root)
-	result = append(result, preOrderTraversal(root.Left)...)
-	result = append(result, preOrderTraversal(root.Right)...)
-	return result
 }
 
 func main() {

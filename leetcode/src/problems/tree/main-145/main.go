@@ -10,7 +10,7 @@ import (
 
 type TreeNode = ds.BinaryNode
 
-func postorderTraversal(root *TreeNode) []int {
+func postOrderTraversal(root *TreeNode) []int {
 	return method1(root)
 }
 
@@ -21,8 +21,8 @@ func method1(root *TreeNode) []int {
 		return result
 	}
 
-	result = append(result, postorderTraversal(root.Left)...)
-	result = append(result, postorderTraversal(root.Right)...)
+	result = append(result, postOrderTraversal(root.Left)...)
+	result = append(result, postOrderTraversal(root.Right)...)
 	result = append(result, root.Val)
 	return result
 }

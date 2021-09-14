@@ -6,13 +6,13 @@ import "github.com/saint-yellow/go-pl/leetcode/src/ds"
 
 type TreeNode = ds.BinaryNode
 
-func buildTree(inorder []int, postorder []int) *TreeNode {
-	return method1(inorder, postorder)
+func buildTree(inOrder []int, postOrder []int) *TreeNode {
+	return method1(inOrder, postOrder)
 }
 
-func method1(inorder, postorder []int) *TreeNode {
+func method1(inOrder, postOrder []int) *TreeNode {
 	mapping := make(map[int]int)
-	for i, v := range inorder {
+	for i, v := range inOrder {
 		mapping[v] = i
 	}
 
@@ -22,9 +22,9 @@ func method1(inorder, postorder []int) *TreeNode {
 			return nil
 		}
 
-		value := postorder[len(postorder)-1]
+		value := postOrder[len(postOrder)-1]
 		index := mapping[value]
-		postorder = postorder[:len(postorder)-1]
+		postOrder = postOrder[:len(postOrder)-1]
 		root := &TreeNode{
 			Val: value,
 		}
@@ -32,5 +32,5 @@ func method1(inorder, postorder []int) *TreeNode {
 		root.Left = helperFunc(leftIndex, index-1)
 		return root
 	}
-	return helperFunc(0, len(inorder)-1)
+	return helperFunc(0, len(inOrder)-1)
 }

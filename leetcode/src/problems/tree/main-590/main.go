@@ -6,7 +6,7 @@ import "github.com/saint-yellow/go-pl/leetcode/src/ds"
 
 type Node = ds.NAryNode
 
-func postorder(root *Node) []int {
+func postOrder(root *Node) []int {
     return method1(root)
 }
 

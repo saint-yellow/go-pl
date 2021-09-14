@@ -10,7 +10,7 @@ import (
 
 type TreeNode = ds.BinaryNode
 
-func inorderTraversal(root *TreeNode) []int {
+func inOrderTraversal(root *TreeNode) []int {
 	return method1(root)
 }
 
@@ -74,5 +74,5 @@ func main() {
 			Right: nil,
 		},
 	}
-	fmt.Println(inorderTraversal(tree))
+	fmt.Println(inOrderTraversal(tree))
 }
