@@ -11,8 +11,21 @@ func trimBST(root *TreeNode, low int, high int) *TreeNode {
 }
 
 func method1(root *TreeNode, low, high int) *TreeNode {
-	// ...
-	return nil
+	if root == nil {
+		return nil
+	}
+
+	if root.Val < low {
+		return method1(root.Right, low, high)
+	}
+	
+	if root.Val > high {
+		return method1(root.Left, low, high)
+	}
+
+	root.Left = method1(root.Left, low, high)
+	root.Right = method1(root.Right, low, high)
+	return root
 }
 
 func main() {
