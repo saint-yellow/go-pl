@@ -49,6 +49,58 @@ func method1(root, p *TreeNode) *TreeNode {
 }
 
 func method2(root, p *TreeNode) *TreeNode {
-	// ...
+	stack := make([]*TreeNode, 0)
+	if root != nil {
+		stack = append(stack, root)
+	}
+
+	// flag := false
+	for len(stack) > 0 {
+		node := stack[len(stack)-1]
+		if node != nil {
+			stack = stack[:len(stack)-1]
+
+			if node.Right != nil {
+				stack = append(stack, node.Right)
+			}
+
+			stack = append(stack, node)
+			stack = append(stack, nil)
+
+			if node.Left != nil {
+				stack = append(stack, node.Left)
+			}
+		} else {
+			stack = stack[:len(stack)-1]
+			stack = stack[:len(stack)-1]
+		}
+	}
 	return nil
+}
+
+func method3(root, p *TreeNode) *TreeNode {
+	flag := false
+	var traversal func(n, p *TreeNode) *TreeNode
+	traversal = func(n, p *TreeNode) *TreeNode {
+		if n == nil {
+			return n
+		}
+
+		if n == p {
+			flag = true
+		}
+
+		left := traversal(n.Left, p)
+		if flag && n.Val > p.Val {
+			flag = false
+			return n
+		}
+		right := traversal(n.Right, p)
+		if left == nil {
+			return right
+		}
+		return left
+	}
+
+	return traversal(root, p)
 }
