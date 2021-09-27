@@ -26,12 +26,14 @@ func method2(numbers []int) []int {
 	k := len(numbers) - 1
 
 	for i, j := 0, len(numbers) - 1; i <= j; {
-		if numbers[i] *numbers[i] < numbers[j] * numbers[j] {
-			result[k] = numbers[j] * numbers[j]
+		a := numbers[i] * numbers[i]
+		b := numbers[j] * numbers[j]
+		if a < b {
+			result[k] = b
 			k--
 			j--
 		} else {
-			result[k] = numbers[i] * numbers[i]
+			result[k] = a
 			k--
 			i++
 		}
@@ -42,6 +44,6 @@ func method2(numbers []int) []int {
 
 func main() {
 	numbers := []int{-4, -1, 0, 3, 10}
-	// fmt.Println(sortedSquares(numbers))
+	fmt.Println(sortedSquares(numbers))
 	fmt.Println(method2(numbers))
 }
