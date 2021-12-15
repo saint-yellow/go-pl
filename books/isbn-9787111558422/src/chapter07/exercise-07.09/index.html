@@ -1,0 +1,19 @@
+<h1>tracks</h1>
+<table>
+    <tr style="text-align: left">
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Album</th>
+        <th>Year</th>
+        <th>Length</th>
+    </tr>
+    {{range .}}
+    <tr>
+        <td><p>{{.Title}}</p></td>
+        <td><p>{{.Artist}}</p></td>
+        <td><p>{{.Album}}</p></td>
+        <td><p>{{.Year}}</p></td>
+        <td><p>{{.Length}}</p></td>
+    </tr>
+    {{end}}
+</table>

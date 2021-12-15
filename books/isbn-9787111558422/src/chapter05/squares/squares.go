@@ -12,9 +12,10 @@ func squares() func() int {
 
 func main() {
 	f := squares()
-	fmt.Println(f())
-	fmt.Println(f())
-	fmt.Println(f())
-	fmt.Println(f())
-	fmt.Println(f())
+	for i := 0; i < 5; i++ {
+		fmt.Println(f()) // 1, 4, 9, 16, 25
+	}
+
+	fmt.Println(f()) // 36
+	
 }
