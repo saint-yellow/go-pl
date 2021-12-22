@@ -37,5 +37,5 @@ func mandelbrot(z complex128) color.Color {
 			return color.Gray{255 - contrast*n}
 		}
 	}
-	return color.Black
+	return color.RGBA{127, 127, 127, 64}
 }

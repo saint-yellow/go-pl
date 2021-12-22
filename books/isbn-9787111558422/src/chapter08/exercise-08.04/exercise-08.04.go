@@ -10,25 +10,20 @@ import (
 	"time"
 )
 
-var wg sync.WaitGroup
-
 func main() {
 	listener, err := net.Listen("tcp", "localhost:8000")
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	for {
 		connection, err := listener.Accept()
 		if err != nil {
 			log.Fatal(err)
 			continue
 		}
-		wg.Add(1)
 		go handleConnection(connection)
-		wg.Wait()
 	}
-
-	
 }
 
 func echo(c net.Conn, shout string, delay time.Duration) {
@@ -40,10 +35,16 @@ func echo(c net.Conn, shout string, delay time.Duration) {
 }
 
 func handleConnection(c net.Conn) {
-	defer wg.Done()
+	var wg sync.WaitGroup
+
 	input := bufio.NewScanner(c)
 	for input.Scan() {
-		echo(c, input.Text(), 1*time.Second)
+		wg.Add(1)
+		go func () {
+			defer wg.Done()
+			echo(c, input.Text(), 1*time.Second)
+		}()
 	}
+	wg.Wait()
 	c.Close()
 }
