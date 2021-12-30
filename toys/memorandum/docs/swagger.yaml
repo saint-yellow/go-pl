@@ -1,0 +1,98 @@
+basePath: /api
+definitions:
+  serialization.Result:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  service.LoginUser:
+    properties:
+      password:
+        example: saint-yellow
+        maxLength: 16
+        minLength: 5
+        type: string
+      userName:
+        example: saint-yellow
+        maxLength: 15
+        minLength: 3
+        type: string
+    required:
+    - password
+    - userName
+    type: object
+  service.RegisterUser:
+    properties:
+      password:
+        example: saint-yellow
+        maxLength: 16
+        minLength: 5
+        type: string
+      userName:
+        example: saint-yellow
+        maxLength: 15
+        minLength: 3
+        type: string
+    required:
+    - password
+    - userName
+    type: object
+host: 127.0.0.1:3000
+info:
+  contact: {}
+  description: This is a sample server celler server.
+  title: RESTful API collection for Memorandum web app
+  version: "1.0"
+paths:
+  /api/user/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户登录
+      parameters:
+      - description: 用户名, 密码
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/service.LoginUser'
+      responses:
+        "200":
+          description: '{"message":"ok"}'
+          schema:
+            $ref: '#/definitions/serialization.Result'
+        "400":
+          description: '{"message":"err","code":1}'
+          schema:
+            $ref: '#/definitions/serialization.Result'
+      summary: 用户登录
+  /api/user/register:
+    post:
+      consumes:
+      - application/json
+      description: 用户注册
+      parameters:
+      - description: 用户名, 密码
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/service.RegisterUser'
+      responses:
+        "200":
+          description: '{"message":"ok"}'
+          schema:
+            $ref: '#/definitions/serialization.Result'
+        "400":
+          description: '{"message":"err","code":1}'
+          schema:
+            $ref: '#/definitions/serialization.Result'
+      summary: 用户注册
+swagger: "2.0"
