@@ -1,4 +1,4 @@
-// LeetCode 主站 Problem Nr. 369: 两个数组的交集
+// LeetCode 主站 Problem Nr. 349: 两个数组的交集
 
 package main
 

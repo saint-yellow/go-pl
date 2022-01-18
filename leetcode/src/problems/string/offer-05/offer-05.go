@@ -49,7 +49,32 @@ func method2(s string) string {
 	return string(bytes)
 }
 
+func method3(s string) string {
+	bytes := []byte(s)
+	spaceCount := 0
+	for _, b := range bytes {
+		if b == ' ' {
+			spaceCount++
+		}
+	}
+
+	result := make([]byte, len(bytes) + spaceCount * 2)
+	i := 0
+	for _, b := range bytes {
+		if b == ' ' {
+			result[i] = '%'
+			result[i+1] = '2'
+			result[i+2] = '0'
+			i += 3
+		} else {
+			result[i] = b
+			i += 1
+		}
+	}
+	return string(result)
+}
+
 func main() {
 	fmt.Println(replaceSpace("I am so happy."))
-	fmt.Println(method2("I am so happy."))
+	fmt.Println(method3("I am so happy."))
 }

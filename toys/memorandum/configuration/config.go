@@ -30,10 +30,6 @@ func Service() serviceConfig {
 	return sc
 }
 
-func Cache() cacheConfig {
-	return cc
-}
-
 func JWT() jwtConfig {
 	return jc
 }
@@ -45,7 +41,7 @@ var (
 	jc jwtConfig
 )
 
-func Init() {
+func init() {
 	file, err := ini.Load("./configuration/config.ini")
 	if err != nil {
 		log.Fatalf("failed to load configuration: %s\n", err)

@@ -18,8 +18,6 @@ import (
 // @host 127.0.0.1:3000
 // @BasePath /api
 func main() {
-	configuration.Init()
-
 	r := router.NewRouter()
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

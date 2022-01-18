@@ -53,9 +53,8 @@ func method1(numbers []int) [][]int {
 func method2(numbers []int) [][]int {
 	sort.Ints(numbers)
 
-	length := len(numbers)
 	result := [][]int{}
-	for i := 0; i < length-2; i++ {
+	for i := 0; i < len(numbers)-2; i++ {
 		n1 := numbers[i]
 		if n1 > 0 {
 			break
@@ -65,7 +64,7 @@ func method2(numbers []int) [][]int {
 			continue
 		}
 
-		left, right := i+1, length-1
+		left, right := i+1, len(numbers)-1
 		for left < right {
 			n2, n3 := numbers[left], numbers[right]
 
