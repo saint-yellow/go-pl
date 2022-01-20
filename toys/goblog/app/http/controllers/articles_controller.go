@@ -1,14 +1,15 @@
 package controllers
 
 import (
-	"database/sql"
 	"fmt"
 	"html/template"
 	"net/http"
 
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/logger"
+	"github.com/saint-yellow/go-pl/toys/goblog/pkg/model/article"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/route"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/types"
+	"gorm.io/gorm"
 )
 
 // ArticlesController 文章相关页面
@@ -19,10 +20,10 @@ type ArticlesController struct {
 func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 	id := route.GetRouteVariable("id", r)
 
-    article, err := getArticleByID(id)
+    article, err := article.Get(id)
 
     if err != nil {
-        if err == sql.ErrNoRows {
+        if err == gorm.ErrRecordNotFound {
             w.WriteHeader(http.StatusNotFound)
             fmt.Fprint(w, "404 文章未找到")
         } else {
@@ -35,7 +36,7 @@ func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
             New("show.gohtml").
             Funcs(template.FuncMap{
                 "RouteNameToURL": route.NameToURL,
-                "Int64ToString": types.Int64ToString,
+                "Uint64ToString": types.Uint64ToString,
             }).
             ParseFiles("resources/views/articles/show.gohtml")
         logger.LogError(err)
