@@ -12,10 +12,10 @@ import (
 	"unicode/utf8"
 
 	"github.com/gorilla/mux"
+	"github.com/saint-yellow/go-pl/toys/goblog/bootstrap"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/database"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/logger"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/route"
-	"github.com/saint-yellow/go-pl/toys/goblog/pkg/types"
 
 	"github.com/go-sql-driver/mysql"
 )
@@ -94,34 +94,6 @@ func (a Article) Delete() (rowsAffected int64, err error) {
     }
 
     return 0, nil
-}
-
-func articlesShowHandler(w http.ResponseWriter, r *http.Request) {
-    id := route.GetRouteVariable("id", r)
-
-    article, err := getArticleByID(id)
-
-    if err != nil {
-        if err == sql.ErrNoRows {
-            w.WriteHeader(http.StatusNotFound)
-            fmt.Fprint(w, "404 文章未找到")
-        } else {
-            logger.LogError(err)
-            w.WriteHeader(http.StatusInternalServerError)
-            fmt.Fprint(w, "500 服务器内部错误")
-        }
-    } else {
-        tmpl, err := template.
-            New("show.gohtml").
-            Funcs(template.FuncMap{
-                "RouteNameToURL": route.RouteNameToURL,
-                "Int64ToString": types.Int64ToString,
-            }).
-            ParseFiles("resources/views/articles/show.gohtml")
-        logger.LogError(err)
-        err = tmpl.Execute(w, article)
-        logger.LogError(err)
-    }
 }
 
 func articlesIndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -302,7 +274,7 @@ func createTables() {
 
 func articlesEditHandler(w http.ResponseWriter, r *http.Request) {
     // 1. 获取 URL 参数
-    id := route.GetRouteVariable("id", r)
+    id := getRouteVariable("id", r)
 
     // 2. 读取对应的文章数据
     article, err := getArticleByID(id)
@@ -339,7 +311,7 @@ func articlesEditHandler(w http.ResponseWriter, r *http.Request) {
 func articlesUpdateHandler(w http.ResponseWriter, r *http.Request) {
 
     // 1. 获取 URL 参数
-    id := route.GetRouteVariable("id", r)
+    id := getRouteVariable("id", r)
 
     // 2. 读取对应的文章数据
     _, err := getArticleByID(id)
@@ -441,7 +413,7 @@ func validateArticleFormData(title string, body string) map[string]string {
 func articlesDeleteHandler(w http.ResponseWriter, r *http.Request) {
 
     // 1. 获取 URL 参数
-    id := route.GetRouteVariable("id", r)
+    id := getRouteVariable("id", r)
 
     // 2. 读取对应的文章数据
     article, err := getArticleByID(id)
@@ -483,14 +455,20 @@ func articlesDeleteHandler(w http.ResponseWriter, r *http.Request) {
     }
 }
 
+// todo: it will be removed
+func getRouteVariable(parameterName string, r *http.Request) string {
+    vars := mux.Vars(r)
+    return vars[parameterName]
+}
+
 func main() {
     database.Initialize()
     db = database.DB
 
-    route.Initialize()
-    router = route.Router
+    // route.Initialize()
+    // router = route.Router
+    router = bootstrap.SetupRoute()
 
-    router.HandleFunc("/articles/{id:[0-9]+}", articlesShowHandler).Methods("GET").Name("articles.show")
     router.HandleFunc("/articles", articlesIndexHandler).Methods("GET").Name("articles.index")
     router.HandleFunc("/articles", articlesStoreHandler).Methods("POST").Name("articles.store")
     router.HandleFunc("/articles/create", articlesCreateHandler).Methods("GET").Name("articles.create")

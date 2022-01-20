@@ -4,19 +4,19 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/saint-yellow/go-pl/toys/goblog/routes"
 )
 
-var Router *mux.Router
+// var Router *mux.Router
 
-func Initialize() {
-	Router = mux.NewRouter()
-    routes.RegisterWebRoutes(Router)
-}
+// func Initialize() {
+// 	Router = mux.NewRouter()
+//     routes.RegisterWebRoutes(Router)
+// }
 
 // RouteNameToURL 通过路由名称来获取 URL
-func RouteNameToURL(routeName string, pairs ...string) string {
-    url, err := Router.Get(routeName).URL(pairs...)
+func NameToURL(routeName string, pairs ...string) string {
+    var router *mux.Router
+    url, err := router.Get(routeName).URL(pairs...)
     if err != nil {
         // checkError(err)
         return ""
