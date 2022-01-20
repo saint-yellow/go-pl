@@ -2,6 +2,7 @@ package bootstrap
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/saint-yellow/go-pl/toys/goblog/pkg/route"
 	"github.com/saint-yellow/go-pl/toys/goblog/routes"
 )
 
@@ -9,5 +10,6 @@ import (
 func SetupRoute() *mux.Router {
     router := mux.NewRouter()
     routes.RegisterWebRoutes(router)
+    route.SetRouter(router)
     return router
 }
