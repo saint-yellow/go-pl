@@ -14,6 +14,7 @@ import (
 	"github.com/saint-yellow/go-pl/toys/goblog/bootstrap"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/database"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/logger"
+	"github.com/saint-yellow/go-pl/toys/goblog/pkg/route"
 )
 
 var ( 
@@ -422,6 +423,7 @@ func main() {
     bootstrap.SetupDB()
 
     router = bootstrap.SetupRoute()
+    route.SetRouter(router)
 
     router.HandleFunc("/articles", articlesIndexHandler).Methods("GET").Name("articles.index")
     router.HandleFunc("/articles", articlesStoreHandler).Methods("POST").Name("articles.store")
