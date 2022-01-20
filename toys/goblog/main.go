@@ -12,6 +12,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/gorilla/mux"
+	"github.com/saint-yellow/go-pl/toys/goblog/pkg/database"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/logger"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/route"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/types"
@@ -19,8 +20,10 @@ import (
 	"github.com/go-sql-driver/mysql"
 )
 
-var router *mux.Router
-var db *sql.DB
+var ( 
+    router *mux.Router
+    db *sql.DB
+)
 
 func initDB() {
 
@@ -494,8 +497,8 @@ func articlesDeleteHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-    initDB()
-    createTables()
+    database.Initialize()
+    db = database.DB
 
     route.Initialize()
     router = route.Router
