@@ -14,6 +14,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/logger"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/route"
+	"github.com/saint-yellow/go-pl/toys/goblog/pkg/types"
 
 	"github.com/go-sql-driver/mysql"
 )
@@ -94,11 +95,6 @@ func (a Article) Delete() (rowsAffected int64, err error) {
     return 0, nil
 }
 
-// Int64ToString 将 int64 转换为 string
-func Int64ToString(num int64) string {
-    return strconv.FormatInt(num, 10)
-}
-
 func articlesShowHandler(w http.ResponseWriter, r *http.Request) {
     id := route.GetRouteVariable("id", r)
 
@@ -118,7 +114,7 @@ func articlesShowHandler(w http.ResponseWriter, r *http.Request) {
             New("show.gohtml").
             Funcs(template.FuncMap{
                 "RouteNameToURL": route.RouteNameToURL,
-                "Int64ToString": Int64ToString,
+                "Int64ToString": types.Int64ToString,
             }).
             ParseFiles("resources/views/articles/show.gohtml")
         logger.LogError(err)
