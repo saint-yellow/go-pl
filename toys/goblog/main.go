@@ -15,7 +15,6 @@ import (
 	"github.com/saint-yellow/go-pl/toys/goblog/bootstrap"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/database"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/logger"
-	"github.com/saint-yellow/go-pl/toys/goblog/pkg/route"
 
 	"github.com/go-sql-driver/mysql"
 )
@@ -464,6 +463,8 @@ func getRouteVariable(parameterName string, r *http.Request) string {
 func main() {
     database.Initialize()
     db = database.DB
+
+    bootstrap.SetupDatabase()
 
     // route.Initialize()
     // router = route.Router
