@@ -13,12 +13,13 @@ import (
 	"unicode/utf8"
 
 	"github.com/gorilla/mux"
+	"github.com/saint-yellow/go-pl/toys/goblog/pkg/route"
 
 	"github.com/go-sql-driver/mysql"
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var router = mux.NewRouter()
+var router *mux.Router
 var db *sql.DB
 
 func initDB() {
@@ -511,6 +512,9 @@ func articlesDeleteHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
     initDB()
     createTables()
+
+    route.Initialize()
+    router = route.Router
 
     router.HandleFunc("/", homeHandler).Methods("GET").Name("home")
     router.HandleFunc("/about", aboutHandler).Methods("GET").Name("about")
