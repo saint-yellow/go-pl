@@ -6,17 +6,16 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// var Router *mux.Router
+var Router *mux.Router
 
-// func Initialize() {
-// 	Router = mux.NewRouter()
-//     routes.RegisterWebRoutes(Router)
-// }
+func SetRouter(r *mux.Router) {
+    Router = r
+}
 
 // RouteNameToURL 通过路由名称来获取 URL
 func NameToURL(routeName string, pairs ...string) string {
-    var router *mux.Router
-    url, err := router.Get(routeName).URL(pairs...)
+    // var router *mux.Router
+    url, err := Router.Get(routeName).URL(pairs...)
     if err != nil {
         // checkError(err)
         return ""

@@ -15,6 +15,7 @@ import (
 	"github.com/saint-yellow/go-pl/toys/goblog/bootstrap"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/database"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/logger"
+	"github.com/saint-yellow/go-pl/toys/goblog/pkg/route"
 
 	"github.com/go-sql-driver/mysql"
 )
@@ -466,9 +467,8 @@ func main() {
 
     bootstrap.SetupDatabase()
 
-    // route.Initialize()
-    // router = route.Router
     router = bootstrap.SetupRoute()
+    route.SetRouter(router)
 
     router.HandleFunc("/articles", articlesIndexHandler).Methods("GET").Name("articles.index")
     router.HandleFunc("/articles", articlesStoreHandler).Methods("POST").Name("articles.store")
