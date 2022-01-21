@@ -22,7 +22,7 @@ func ConnectDB() *gorm.DB {
     var err error
 
     // 初始化 MySQL 连接信息
-    config := mysql.New(mysql.Config{
+    gormConfig := mysql.New(mysql.Config{
         DSN: fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=%v&parseTime=True&loc=Local",
             config.GetString("database.mysql.username"),
             config.GetString("database.mysql.password"),
@@ -42,7 +42,7 @@ func ConnectDB() *gorm.DB {
     }
 
     // 准备数据库连接池
-    DB, err = gorm.Open(config, &gorm.Config{
+    DB, err = gorm.Open(gormConfig, &gorm.Config{
         Logger: gormlogger.Default.LogMode(level),
     })
 
