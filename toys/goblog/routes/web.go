@@ -5,6 +5,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/saint-yellow/go-pl/toys/goblog/app/http/controllers"
+	"github.com/saint-yellow/go-pl/toys/goblog/app/http/middlewares"
 )
 
 // RegisterWebRoutes 注册网页相关路由
@@ -30,11 +31,13 @@ func RegisterWebRoutes(r *mux.Router) {
     auc := new(controllers.AuthController)
     r.HandleFunc("/auth/register", auc.Register).Methods("GET").Name("auth.register")
     r.HandleFunc("/auth/do-register", auc.DoRegister).Methods("POST").Name("auth.do-register")
+    r.HandleFunc("/auth/login", auc.Login).Methods("GET").Name("auth.login")
+    r.HandleFunc("/auth/do-login", auc.DoLogin).Methods("POST").Name("auth.do-login")
 
     // 静态资源
     r.PathPrefix("/css/").Handler(http.FileServer(http.Dir("./public")))
     r.PathPrefix("/js/").Handler(http.FileServer(http.Dir("./public")))
 
-    // 中间件：强制内容类型为 HTML
-    // r.Use(middlewares.ForceHTML)
+    // 开始会话
+    r.Use(middlewares.StartSession)
 }
