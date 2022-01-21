@@ -23,7 +23,7 @@ func RenderSimple(w io.Writer, data interface{}, tplFiles ...string) {
     RenderTemplate(w, "simple", data, tplFiles...)
 }
 
-// RenderTeamplate 渲染视图
+// RenderTeamplate 渲染视图的底层方法
 func RenderTemplate(w io.Writer, name string, data interface{}, tplFiles ...string) {
     // 1 设置模板相对路径
     viewDir := "resources/views/"
