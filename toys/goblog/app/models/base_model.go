@@ -1,6 +1,8 @@
 package models
 
 import (
+	"time"
+
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/types"
 )
 
@@ -8,8 +10,8 @@ import (
 type BaseModel struct {
 	ID uint64 `gorm:"column:id;primaryKey;autoIncrement;not null"`
 
-	// CreatedAt time.Time `gorm:"column:created_at;index"`
-	// UpdatedAt time.Time `gorm:"column:updated_at;index"`
+	CreatedAt time.Time `gorm:"column:created_at;index"`
+	UpdatedAt time.Time `gorm:"column:updated_at;index"`
 }
 
 // GetStringID 获取 ID 的字符串格式

@@ -14,7 +14,7 @@ var DB *sql.DB
 
 func Initialize() {
 	initDB()
-	createTables()
+	// createTables()
 }
 
 func initDB() {
