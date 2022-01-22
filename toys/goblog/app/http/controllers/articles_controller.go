@@ -3,12 +3,11 @@ package controllers
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/saint-yellow/go-pl/toys/goblog/app/models/article"
 	"github.com/saint-yellow/go-pl/toys/goblog/app/policies"
 	"github.com/saint-yellow/go-pl/toys/goblog/app/requests"
-	"github.com/saint-yellow/go-pl/toys/goblog/pkg/flash"
+	"github.com/saint-yellow/go-pl/toys/goblog/pkg/auth"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/logger"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/route"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/view"
@@ -17,6 +16,7 @@ import (
 
 // ArticlesController 文章相关页面
 type ArticlesController struct {
+    BaseController
 }
 
 // Show 文章详情页面
@@ -43,18 +43,17 @@ func (*ArticlesController) Show(w http.ResponseWriter, r *http.Request) {
 }}
 
 // Index 文章列表页
-func (*ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
+func (ac *ArticlesController) Index(w http.ResponseWriter, r *http.Request) {
     // 1. 获取结果集
     articles, err := article.GetAll()
 
     if err != nil {
-        // 数据库错误
-        logger.LogError(err)
-        w.WriteHeader(http.StatusInternalServerError)
-        fmt.Fprint(w, "500 服务器内部错误")
+        ac.ResponseForSQLError(w, err)
     } else {
         // 2. 加载模板
-        view.Render(w, view.D{"Articles": articles}, "articles.index", "articles._article_meta")
+        view.Render(w, view.D{
+            "Articles": articles,
+        }, "articles.index", "articles._article_meta")
     }
 }
 
@@ -65,19 +64,24 @@ func (*ArticlesController) Create(w http.ResponseWriter, r *http.Request) {
 
 // Store 文章创建页面 
 func (*ArticlesController)  Store(w http.ResponseWriter, r *http.Request)  {
-    // 初始化数据
+    // 1. 初始化数据
+    currentUser := auth.User()
     _article := article.Article{
-        Title: r.PostFormValue("title"),
-        Body: r.PostFormValue("body"),
+        Title:  r.PostFormValue("title"),
+        Body:   r.PostFormValue("body"),
+        UserID: currentUser.ID,
     }
 
+    // 2. 表单验证
     errors := requests.ValidateArticleForm(_article)
 
-    // 检查是否有错误
+    // 3. 检测错误
     if len(errors) == 0 {
+        // 创建文章
         _article.Create()
         if _article.ID > 0 {
-            fmt.Fprint(w, "插入成功，ID 为"+strconv.FormatUint(_article.ID, 10))
+            indexURL := route.NameToURL("articles.show", "id", _article.GetStringID())
+            http.Redirect(w, r, indexURL, http.StatusFound)
         } else {
             w.WriteHeader(http.StatusInternalServerError)
             fmt.Fprint(w, "创建文章失败，请联系管理员")
@@ -85,13 +89,13 @@ func (*ArticlesController)  Store(w http.ResponseWriter, r *http.Request)  {
     } else {
         view.Render(w, view.D{
             "Article": _article,
-            "Errors": errors,
+            "Errors":  errors,
         }, "articles.create", "articles._form_field")
     }
 }
 
 // Edit 文章更新页面
-func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
+func (ac *ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 
     // 1. 获取 URL 参数
     id := route.GetRouteVariable("id", r)
@@ -101,21 +105,11 @@ func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 
     // 3. 如果出现错误
     if err != nil {
-        if err == gorm.ErrRecordNotFound {
-            // 3.1 数据未找到
-            w.WriteHeader(http.StatusNotFound)
-            fmt.Fprint(w, "404 文章未找到")
-        } else {
-            // 3.2 数据库错误
-            logger.LogError(err)
-            w.WriteHeader(http.StatusInternalServerError)
-            fmt.Fprint(w, "500 服务器内部错误")
-        }
+        ac.ResponseForSQLError(w, err)
     } else {
         // 检查权限
         if !policies.CanModifyArticle(_article) {
-            flash.Warning("未授权操作！")
-            http.Redirect(w, r, "/", http.StatusFound)
+            ac.ResponseForUnauthorized(w, r)
         } else {
             // 4. 读取成功，显示编辑文章表单
             view.Render(w, view.D{
@@ -127,7 +121,7 @@ func (*ArticlesController) Edit(w http.ResponseWriter, r *http.Request) {
 }
 
 // Update 更新文章
-func (*ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
+func (ac *ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
 
     // 1. 获取 URL 参数
     id := route.GetRouteVariable("id", r)
@@ -137,23 +131,13 @@ func (*ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
 
     // 3. 如果出现错误
     if err != nil {
-        if err == gorm.ErrRecordNotFound {
-            // 3.1 数据未找到
-            w.WriteHeader(http.StatusNotFound)
-            fmt.Fprint(w, "404 文章未找到")
-        } else {
-            // 3.2 数据库错误
-            logger.LogError(err)
-            w.WriteHeader(http.StatusInternalServerError)
-            fmt.Fprint(w, "500 服务器内部错误")
-        }
+        ac.ResponseForSQLError(w, err)
     } else {
         // 4. 未出现错误
 
         // 检查权限
         if !policies.CanModifyArticle(_article) {
-            flash.Warning("未授权操作！")
-            http.Redirect(w, r, "/", http.StatusForbidden)
+            ac.ResponseForUnauthorized(w, r)
         } else {
             // 4.1 表单验证
             _article.Title = r.PostFormValue("title")
@@ -192,7 +176,7 @@ func (*ArticlesController) Update(w http.ResponseWriter, r *http.Request) {
 }
 
 // Delete 删除文章
-func (*ArticlesController) Delete(w http.ResponseWriter, r *http.Request) {
+func (ac *ArticlesController) Delete(w http.ResponseWriter, r *http.Request) {
 
     // 1. 获取 URL 参数
     id := route.GetRouteVariable("id", r)
@@ -202,21 +186,11 @@ func (*ArticlesController) Delete(w http.ResponseWriter, r *http.Request) {
 
     // 3. 如果出现错误
     if err != nil {
-        if err == gorm.ErrRecordNotFound {
-            // 3.1 数据未找到
-            w.WriteHeader(http.StatusNotFound)
-            fmt.Fprint(w, "404 文章未找到")
-        } else {
-            // 3.2 数据库错误
-            logger.LogError(err)
-            w.WriteHeader(http.StatusInternalServerError)
-            fmt.Fprint(w, "500 服务器内部错误")
-        }
+        ac.ResponseForSQLError(w, err)
     } else {
         // 检查权限
         if !policies.CanModifyArticle(_article) {
-            flash.Warning("未授权操作！")
-            http.Redirect(w, r, "/", http.StatusForbidden)
+            ac.ResponseForUnauthorized(w, r)
         } else {
             // 4. 未出现错误，执行删除操作
             rowsAffected, err := _article.Delete()
