@@ -8,3 +8,8 @@ import (
 func (a Article) Link() string {
     return route.NameToURL("articles.show", "id", a.GetStringID())
 }
+
+// CreatedAtDate 创建日期
+func (article Article) CreatedAtDate() string {
+    return article.CreatedAt.Format("2006-01-02")
+}
