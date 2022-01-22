@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/saint-yellow/go-pl/toys/goblog/app/models/category"
 	"github.com/saint-yellow/go-pl/toys/goblog/app/models/user"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/auth"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/flash"
@@ -33,6 +34,7 @@ func RenderTemplate(w io.Writer, name string, data D, tplFiles ...string) {
     data["loginUser"] = auth.User()
     data["flash"] = flash.All()
     data["Users"], _ = user.All()
+    data["Categories"], _ = category.All()
 
     // 2. 生成模板文件
     allFiles := getTemplateFiles(tplFiles...)
