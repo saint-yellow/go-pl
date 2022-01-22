@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/saint-yellow/go-pl/toys/goblog/pkg/config"
+	"github.com/saint-yellow/go-pl/toys/goblog/pkg/logger"
 )
 
 var Router *mux.Router
@@ -16,10 +18,11 @@ func SetRouter(r *mux.Router) {
 func NameToURL(routeName string, pairs ...string) string {
     url, err := Router.Get(routeName).URL(pairs...)
     if err != nil {
+        logger.LogError(err)
         return ""
     }
 
-    return url.String()
+    return config.GetString("app.url") + url.String()
 }
 
 // GetRouteVariable 获取 URI 路由参数
