@@ -71,6 +71,7 @@ func (*ArticlesController)  Store(w http.ResponseWriter, r *http.Request)  {
         Title:  r.PostFormValue("title"),
         Body:   r.PostFormValue("body"),
         UserID: currentUser.ID,
+        CategoryID: 4,
     }
 
     // 2. 表单验证
@@ -216,3 +217,5 @@ func (ac *ArticlesController) Delete(w http.ResponseWriter, r *http.Request) {
         }
     }
 }
+
+// todo: 请在创建文章时候，让用户可以选择分类。文章创建后，文章详情页里的 Meta 数据里，可以显示分类信息

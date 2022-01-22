@@ -99,3 +99,5 @@ func (cc *CategoriesController) Show(w http.ResponseWriter, r *http.Request) {
         }, "articles.index", "articles._article_meta")
     }
 }
+
+// todo: 请为文章分类开发编辑功能，允许登录用户可以编辑某个分类

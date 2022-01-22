@@ -16,7 +16,7 @@ type Article struct {
     UserID uint64 `gorm:"not null;index"`
     User user.User
 
-    CategoryID uint64 `gorm:"not null;default:4;index"`
+    CategoryID uint64 `gorm:"not null;index"`
     Category category.Category
 
 }
