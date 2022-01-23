@@ -7,6 +7,7 @@ import (
 	"github.com/saint-yellow/go-pl/toys/goblog/app/http/middlewares"
 	"github.com/saint-yellow/go-pl/toys/goblog/bootstrap"
 	"github.com/saint-yellow/go-pl/toys/goblog/config"
+	c "github.com/saint-yellow/go-pl/toys/goblog/pkg/config"
 	"github.com/saint-yellow/go-pl/toys/goblog/pkg/logger"
 )
 
@@ -15,6 +16,9 @@ import (
 //go:embed resources/views/categories/*
 //go:embed resources/views/layouts/*
 var tplFS embed.FS
+
+//go:embed public/*
+var staticFS embed.FS
 
 func init() {
 	// 初始化配置信息
@@ -29,8 +33,8 @@ func main() {
 	bootstrap.SetupTemplate(tplFS)
 
 	// 初始化路由绑定
-    router := bootstrap.SetupRoute()
+    router := bootstrap.SetupRoute(staticFS)
 
-    err := http.ListenAndServe(":3000", middlewares.RemoveTrailingSlash(router))
+    err := http.ListenAndServe(":"+c.GetString("app.port"), middlewares.RemoveTrailingSlash(router))
     logger.LogError(err)
 }
