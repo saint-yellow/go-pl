@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/saint-yellow/go-pl/toys/gohub/app/models/user"
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/config"
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/database"
 	"gorm.io/driver/mysql"
@@ -48,4 +49,7 @@ func SetupDatabase() {
     database.SQLDB.SetMaxIdleConns(config.GetInt("database.mysql.max_idle_connections"))
     // 设置每个链接的过期时间
     database.SQLDB.SetConnMaxLifetime(time.Duration(config.GetInt("database.mysql.max_life_seconds")) * time.Second)
+
+    // 自动迁移
+    database.DB.AutoMigrate(&user.User{})
 }
