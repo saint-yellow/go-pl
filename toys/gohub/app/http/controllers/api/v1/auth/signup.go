@@ -6,6 +6,7 @@ import (
 	v1 "github.com/saint-yellow/go-pl/toys/gohub/app/http/controllers/api/v1"
 	"github.com/saint-yellow/go-pl/toys/gohub/app/models/user"
 	"github.com/saint-yellow/go-pl/toys/gohub/app/requests"
+	"github.com/saint-yellow/go-pl/toys/gohub/pkg/jwt"
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/response"
 )
 
@@ -60,7 +61,9 @@ func (sc *SignupController) SignupUsingPhone(c *gin.Context) {
     _user.Create()
 
     if _user.ID > 0 {
+        token := jwt.NewJWT().IssueToken(_user.GetStringID(), _user.Name)
         response.CreatedJSON(c, gin.H{
+            "token": token,
             "data": _user,
         })
     } else {
@@ -86,7 +89,9 @@ func (sc *SignupController) SignupUsingEmail(c *gin.Context) {
     userModel.Create()
 
     if userModel.ID > 0 {
+        token := jwt.NewJWT().IssueToken(userModel.GetStringID(), userModel.Name)
         response.CreatedJSON(c, gin.H{
+            "token": token,
             "data": userModel,
         })
     } else {
