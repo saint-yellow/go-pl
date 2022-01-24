@@ -25,6 +25,11 @@ func RegisterAPIRoutes(r *gin.Engine) {
             // 使用邮箱注册
             authGroup.POST("/signup/using-email", suc.SignupUsingEmail)
 
+            // 登录相关的接口
+            lgc := new(auth.LoginController)
+            // 使用手机号，短信验证码进行登录
+            authGroup.POST("/login/using-phone", lgc.LoginByPhone)
+
             // 验证码相关的接口
             vcc := new(auth.VerifyCodeController)
             // 图片验证码，需要加限流
