@@ -2,6 +2,7 @@ package v1
 
 import (
 	"github.com/saint-yellow/go-pl/toys/gohub/app/models/topic"
+	"github.com/saint-yellow/go-pl/toys/gohub/app/policies"
 	"github.com/saint-yellow/go-pl/toys/gohub/app/requests"
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/auth"
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/response"
@@ -37,6 +38,11 @@ func (ctrl *TopicsController) Update(c *gin.Context) {
     topicModel := topic.Get(c.Param("id"))
     if topicModel.ID == 0 {
         response.Abort404(c)
+        return
+    }
+
+    if ok := policies.CanModifyTopic(c, topicModel); !ok {
+        response.Abort403(c)
         return
     }
 
