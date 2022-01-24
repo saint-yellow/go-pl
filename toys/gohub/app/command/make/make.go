@@ -67,6 +67,7 @@ func init() {
     MakeCommand.AddCommand(
         CmdSubcommand,
 		ModelSubcommand,
+        APIControllerSubcommand,
     )
 }
 
