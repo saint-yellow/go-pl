@@ -2,7 +2,7 @@ package migrate
 
 import "github.com/spf13/cobra"
 
-var DownSubcommand = &cobra.Command{
+var Down = &cobra.Command{
     Use: "down",
     // 设置别名 migrate down == migrate rollback
     Aliases: []string{"rollback"},

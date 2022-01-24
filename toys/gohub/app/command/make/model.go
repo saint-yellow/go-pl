@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var ModelSubcommand = &cobra.Command{
+var Model = &cobra.Command{
     Use:   "model",
     Short: "Crate model file, example: make model user",
     Run:   runMakeModel,

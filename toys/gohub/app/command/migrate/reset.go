@@ -2,7 +2,7 @@ package migrate
 
 import "github.com/spf13/cobra"
 
-var ResetSubcommand = &cobra.Command{
+var Reset = &cobra.Command{
     Use:   "reset",
     Short: "Rollback all database migrations",
     Run:   runReset,

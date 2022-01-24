@@ -8,7 +8,7 @@ import (
 )
 
 // make cmd 子命令
-var CmdSubcommand = &cobra.Command{
+var CMD = &cobra.Command{
     Use:   "cmd",
     Short: "Create a command, should be snake_case, exmaple: make cmd buckup_database",
     Run:   runMakeCMD,

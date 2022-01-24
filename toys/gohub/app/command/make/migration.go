@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var MigrationSubcommand = &cobra.Command{
+var Migration = &cobra.Command{
     Use:   "migration",
     Short: "Create a migration file, example: make migration add_users_table",
     Run:   runMakeMigration,

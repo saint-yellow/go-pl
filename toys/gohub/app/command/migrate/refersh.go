@@ -2,7 +2,7 @@ package migrate
 
 import "github.com/spf13/cobra"
 
-var RefreshSubcommand = &cobra.Command{
+var Refresh = &cobra.Command{
     Use:   "refresh",
     Short: "Reset and re-run all migrations",
     Run:   runRefresh,

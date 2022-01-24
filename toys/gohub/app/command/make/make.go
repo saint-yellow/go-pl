@@ -9,7 +9,6 @@ import (
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/console"
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/file"
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/str"
-	"github.com/spf13/cobra"
 )
 
 // Model 参数解释
@@ -42,7 +41,7 @@ import (
 //     "VariableNamePlural": "topicComments",
 //     "PackageName": "topic_comment"
 // }
-type Model struct {
+type NamingModel struct {
     TableName          string
     StructName         string
     StructNamePlural   string
@@ -56,26 +55,9 @@ type Model struct {
 //go:embed stubs
 var stubsFS embed.FS
 
-// CmdMake 说明 cobra 命令
-var MakeCommand = &cobra.Command{
-    Use:   "make",
-    Short: "Generate file and code",
-}
-
-func init() {
-    // 注册 make 的子命令
-    MakeCommand.AddCommand(
-        CmdSubcommand,
-		ModelSubcommand,
-        APIControllerSubcommand,
-        RequestSubcommand,
-        MigrationSubcommand,
-    )
-}
-
 // makeModelFromString 格式化用户输入的内容
-func makeModelFromString(name string) Model {
-    model := Model{}
+func makeModelFromString(name string) NamingModel {
+    model := NamingModel{}
     model.StructName = str.Singular(strcase.ToCamel(name))
     model.StructNamePlural = str.Plural(model.StructName)
     model.TableName = str.Snake(model.StructNamePlural)
@@ -87,7 +69,7 @@ func makeModelFromString(name string) Model {
 
 // createFileFromStub 读取 stub 文件并进行变量替换
 // 最后一个选项可选，如若传参，应传 map[string]string 类型，作为附加的变量搜索替换
-func createFileFromStub(filePath string, stubName string, model Model, variables ...interface{}) {
+func createFileFromStub(filePath string, stubName string, model NamingModel, variables ...interface{}) {
 
     // 实现最后一个参数可选
     replaces := make(map[string]string)

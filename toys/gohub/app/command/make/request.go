@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var RequestSubcommand = &cobra.Command{
+var Request = &cobra.Command{
     Use:   "request",
     Short: "Create request file, example make request user",
     Run:   runMakeRequest,

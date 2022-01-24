@@ -2,7 +2,7 @@ package migrate
 
 import "github.com/spf13/cobra"
 
-var UpSubcommand = &cobra.Command{
+var Up = &cobra.Command{
     Use:   "up",
     Short: "Run unmigrated migrations",
     Run:   runUp,

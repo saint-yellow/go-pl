@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var APIControllerSubcommand = &cobra.Command{
+var APIController = &cobra.Command{
     Use:   "apicontroller",
     Short: "Create api controller, example: make apicontroller v1/user",
     Run:   runMakeAPIController,
