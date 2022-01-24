@@ -68,6 +68,7 @@ func init() {
         CmdSubcommand,
 		ModelSubcommand,
         APIControllerSubcommand,
+        RequestSubcommand,
     )
 }
 
