@@ -31,6 +31,8 @@ func RegisterAPIRoutes(r *gin.Engine) {
             authGroup.POST("/login/using-phone", lgc.LoginByPhone)
             // 支持手机号，Email 和 用户名
             authGroup.POST("/login/using-password", lgc.LoginByPassword)
+            // 刷新令牌
+            authGroup.POST("/login/refresh-token", lgc.RefreshToken)
 
             // 验证码相关的接口
             vcc := new(auth.VerifyCodeController)
