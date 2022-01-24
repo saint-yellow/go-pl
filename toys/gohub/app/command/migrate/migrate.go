@@ -15,6 +15,7 @@ var MigrateCommand = &cobra.Command{
 func init() {
     MigrateCommand.AddCommand(
         UpSubcommand,
+        DownSubcommand,
     )
 }
 
