@@ -3,6 +3,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	controllers "github.com/saint-yellow/go-pl/toys/gohub/app/http/controllers/api/v1"
 	"github.com/saint-yellow/go-pl/toys/gohub/app/http/controllers/api/v1/auth"
 	"github.com/saint-yellow/go-pl/toys/gohub/app/http/middlewares"
 )
@@ -51,5 +52,10 @@ func RegisterAPIRoutes(r *gin.Engine) {
                 }
             }
         }
+
+        // 用户相关的接口
+        uc := new(controllers.UsersController)
+        // 获取当前用户
+        v1.GET("/user", middlewares.AuthJWT(), uc.CurrentUser)
     }
 }
