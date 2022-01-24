@@ -1,15 +1,16 @@
 package topic
 
 import (
-    "github.com/saint-yellow/go-pl/toys/gohub/pkg/app"
-    "github.com/saint-yellow/go-pl/toys/gohub/pkg/database"
-    "github.com/saint-yellow/go-pl/toys/gohub/pkg/paginator"
+	"github.com/saint-yellow/go-pl/toys/gohub/pkg/app"
+	"github.com/saint-yellow/go-pl/toys/gohub/pkg/database"
+	"github.com/saint-yellow/go-pl/toys/gohub/pkg/paginator"
+	"gorm.io/gorm/clause"
 
-    "github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 )
 
 func Get(idstr string) (topic Topic) {
-    database.DB.Where("id", idstr).First(&topic)
+    database.DB.Preload(clause.Associations).Where("id", idstr).First(&topic)
     return
 }
 
