@@ -21,6 +21,6 @@ func init() {
         subcommand.Migration,
         subcommand.Factory,
         subcommand.Seeder,
+        subcommand.Policy,
     )
 }
-
