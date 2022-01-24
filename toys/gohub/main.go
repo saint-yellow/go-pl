@@ -6,6 +6,7 @@ import (
 
 	"github.com/saint-yellow/go-pl/toys/gohub/app/command"
 	"github.com/saint-yellow/go-pl/toys/gohub/app/command/make"
+	"github.com/saint-yellow/go-pl/toys/gohub/app/command/migrate"
 	"github.com/saint-yellow/go-pl/toys/gohub/bootstrap"
 	btsConfig "github.com/saint-yellow/go-pl/toys/gohub/config"
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/config"
@@ -50,6 +51,7 @@ func main() {
         command.KeyCommand,
         command.PlayCommand,
         make.MakeCommand,
+        migrate.MigrateCommand,
     )
 
     // 配置默认运行 Web 服务

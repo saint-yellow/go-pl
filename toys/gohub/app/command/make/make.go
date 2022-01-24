@@ -69,6 +69,7 @@ func init() {
 		ModelSubcommand,
         APIControllerSubcommand,
         RequestSubcommand,
+        MigrationSubcommand,
     )
 }
 
