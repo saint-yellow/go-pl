@@ -50,6 +50,7 @@ func main() {
         command.PlayCommand,
         command.Make,
         command.Migrate,
+        command.Seed,
     )
 
     // 配置默认运行 Web 服务
