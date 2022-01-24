@@ -54,6 +54,7 @@ func main() {
         command.Make,
         command.Migrate,
         command.Seed,
+        command.Cache,
     )
 
     // 配置默认运行 Web 服务
