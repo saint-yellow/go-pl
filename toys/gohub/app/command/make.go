@@ -1,8 +1,8 @@
 package command
 
 import (
+	subcommand "github.com/saint-yellow/go-pl/toys/gohub/app/command/make"
 	"github.com/spf13/cobra"
-    subcommand "github.com/saint-yellow/go-pl/toys/gohub/app/command/make"
 )
 
 // MakeCommand 说明 cobra 命令
@@ -19,6 +19,7 @@ func init() {
         subcommand.APIController,
         subcommand.Request,
         subcommand.Migration,
+        subcommand.Factory,
     )
 }
 
