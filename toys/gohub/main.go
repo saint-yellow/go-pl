@@ -5,12 +5,9 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/saint-yellow/go-pl/toys/gohub/app/http/middlewares"
 	"github.com/saint-yellow/go-pl/toys/gohub/bootstrap"
 	btsConfig "github.com/saint-yellow/go-pl/toys/gohub/config"
-	"github.com/saint-yellow/go-pl/toys/gohub/pkg/auth"
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/config"
-	"github.com/saint-yellow/go-pl/toys/gohub/pkg/response"
 )
 
 func init() {
