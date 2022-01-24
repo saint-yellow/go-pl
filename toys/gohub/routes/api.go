@@ -4,51 +4,52 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/saint-yellow/go-pl/toys/gohub/app/http/controllers/api/v1/auth"
+	"github.com/saint-yellow/go-pl/toys/gohub/app/http/middlewares"
 )
 
-// RegisterAPIRoutes 注册网页相关路由
+// RegisterAPIRoutes 注册 API 相关路由
 func RegisterAPIRoutes(r *gin.Engine) {
 
     // 测试一个 v1 的路由组，我们所有的 v1 版本的路由都将存放到这里
     v1 := r.Group("/v1")
     {
-        authGroup := v1.Group("/auth")
+        // 全局限流中间件：每小时限流。这里是所有 API （根据 IP）请求加起来。
+        // 作为参考 Github API 每小时最多 60 个请求（根据 IP）。
+        // 测试时，可以调高一点。
+        v1.Use(middlewares.LimitIP("200-H"))
         {
-            // 注册相关的接口
-            suc := new(auth.SignupController)
-            // 判断手机是否已经注册
-            authGroup.POST("/signup/phone/exist", suc.IsPhoneExist)
-            // 判断邮箱是否已经注册
-            authGroup.POST("/signup/email/exist", suc.IsEmailExist)
-            // 使用手机注册
-            authGroup.POST("/signup/using-phone", suc.SignupUsingPhone)
-            // 使用邮箱注册
-            authGroup.POST("/signup/using-email", suc.SignupUsingEmail)
+            authGroup := v1.Group("/auth")
+            {
+                // 限流中间件：每小时限流，作为参考 Github API 每小时最多 60 个请求（根据 IP）
+                // 测试时，可以调高一点
+                authGroup.Use(middlewares.LimitIP("1000-H"))
+                {
+                    // 登录
+                    lgc := new(auth.LoginController)
+                    authGroup.POST("/login/using-phone", middlewares.GuestJWT(), lgc.LoginByPhone)
+                    authGroup.POST("/login/using-password", middlewares.GuestJWT(), lgc.LoginByPassword)
+                    authGroup.POST("/login/refresh-token", middlewares.AuthJWT(), lgc.RefreshToken)
 
-            // 登录相关的接口
-            lgc := new(auth.LoginController)
-            // 使用手机号，短信验证码进行登录
-            authGroup.POST("/login/using-phone", lgc.LoginByPhone)
-            // 支持手机号，Email 和 用户名
-            authGroup.POST("/login/using-password", lgc.LoginByPassword)
-            // 刷新令牌
-            authGroup.POST("/login/refresh-token", lgc.RefreshToken)
+                    // 重置密码
+                    pwc := new(auth.PasswordController)
+                    authGroup.POST("/password-reset/using-email", middlewares.GuestJWT(), pwc.ResetByEmail)
+                    authGroup.POST("/password-reset/using-phone", middlewares.GuestJWT(), pwc.ResetByPhone)
 
-            // 密码相关的接口
-            pwc := new(auth.PasswordController)
-            // 使用手机重置密码
-            authGroup.POST("/password-reset/using-phone", pwc.ResetByPhone)
-            // 使用邮箱重置密码
-            authGroup.POST("/password-reset/using-email", pwc.ResetByEmail)
+                    // 注册用户
+                    suc := new(auth.SignupController)
+                    authGroup.POST("/signup/using-phone", middlewares.GuestJWT(), suc.SignupUsingPhone)
+                    authGroup.POST("/signup/using-email", middlewares.GuestJWT(), suc.SignupUsingEmail)
+                    authGroup.POST("/signup/phone/exist", middlewares.GuestJWT(), middlewares.LimitPerRoute("60-H"), suc.IsPhoneExist)
+                    authGroup.POST("/signup/email/exist", middlewares.GuestJWT(), middlewares.LimitPerRoute("60-H"), suc.IsEmailExist)
 
-            // 验证码相关的接口
-            vcc := new(auth.VerifyCodeController)
-            // 图片验证码，需要加限流
-            authGroup.POST("/verify-codes/captcha", vcc.ShowCaptcha)
-            // 发送短信验证码
-            authGroup.POST("/verify-codes/phone", vcc.SendUsingPhone)
-            // 发送邮件验证码
-            authGroup.POST("/verify-codes/email", vcc.SendUsingEmail)
+                    // 发送验证码
+                    vcc := new(auth.VerifyCodeController)
+                    authGroup.POST("/verify-codes/phone", middlewares.LimitPerRoute("20-H"), vcc.SendUsingPhone)
+                    authGroup.POST("/verify-codes/email", middlewares.LimitPerRoute("20-H"), vcc.SendUsingEmail)
+                    // 图片验证码
+                    authGroup.POST("/verify-codes/captcha", middlewares.LimitPerRoute("50-H"), vcc.ShowCaptcha)
+                }
+            }
         }
     }
 }
