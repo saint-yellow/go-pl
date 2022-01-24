@@ -6,3 +6,8 @@ import "github.com/saint-yellow/go-pl/toys/gohub/pkg/database"
 func (userModel *User) Create() {
     database.DB.Create(&userModel)
 }
+
+func (userModel *User) Save() int64 {
+    result := database.DB.Save(&userModel)
+    return result.RowsAffected
+}

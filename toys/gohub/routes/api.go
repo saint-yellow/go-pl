@@ -34,6 +34,11 @@ func RegisterAPIRoutes(r *gin.Engine) {
             // 刷新令牌
             authGroup.POST("/login/refresh-token", lgc.RefreshToken)
 
+            // 密码相关的接口
+            pwc := new(auth.PasswordController)
+            // 使用手机重置密码
+            authGroup.POST("/password-reset/using-phone", pwc.ResetByPhone)
+
             // 验证码相关的接口
             vcc := new(auth.VerifyCodeController)
             // 图片验证码，需要加限流
