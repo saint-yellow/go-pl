@@ -16,6 +16,8 @@ func init() {
     MigrateCommand.AddCommand(
         UpSubcommand,
         DownSubcommand,
+        ResetSubcommand,
+        RefreshSubcommand,
     )
 }
 
