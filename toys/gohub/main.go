@@ -47,6 +47,7 @@ func main() {
     rootCmd.AddCommand(
         command.ServeCommand,
         command.KeyCommand,
+        command.PlayCommand,
     )
 
     // 配置默认运行 Web 服务
