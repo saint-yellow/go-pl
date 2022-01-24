@@ -20,6 +20,7 @@ func init() {
         subcommand.Request,
         subcommand.Migration,
         subcommand.Factory,
+        subcommand.Seeder,
     )
 }
 
