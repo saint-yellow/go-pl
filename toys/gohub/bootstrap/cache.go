@@ -7,8 +7,8 @@ import (
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/config"
 )
 
-// SetupCache 缓存
-func SetupCache() {
+// setupCache 缓存
+func setupCache() {
 
     // 初始化缓存专用的 redis client, 使用专属缓存 DB
     rds := cache.NewRedisStore(

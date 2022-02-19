@@ -30,19 +30,7 @@ func main() {
             // 配置初始化，依赖命令行 --env 参数
             config.InitConfig(command.Env)
 
-            // 初始化 Logger
-            bootstrap.SetupLogger()
-
-            // 初始化数据库
-            bootstrap.SetupDatabase()
-
-            // 初始化 Redis
-            bootstrap.SetupRedis()
-
-            // 初始化缓存
-            bootstrap.SetupCache()
-
-            // 初始化缓存
+            bootstrap.Setup()
         },
     }
 

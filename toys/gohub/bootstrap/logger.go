@@ -5,8 +5,8 @@ import (
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/logger"
 )
 
-// SetupLogger 初始化 Logger
-func SetupLogger() {
+// setupLogger 初始化 Logger
+func setupLogger() {
 
     logger.InitLogger(
         config.GetString("log.filename"),

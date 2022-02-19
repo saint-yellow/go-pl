@@ -9,12 +9,13 @@ import (
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/database"
 	"github.com/saint-yellow/go-pl/toys/gohub/pkg/logger"
 	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
-// SetupDatabase 初始化数据库和 ORM
-func SetupDatabase() {
+// setupDatabase 初始化数据库和 ORM
+func setupDatabase() {
 
     var dbConfig gorm.Dialector
     switch config.Get("database.connection") {
@@ -29,6 +30,19 @@ func SetupDatabase() {
             config.Get("database.mysql.charset"),
         )
         dbConfig = mysql.New(mysql.Config{
+            DSN: dsn,
+        })
+    case "postgres":
+        // 构建 DSN 信息
+        dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=%v&parseTime=True&multiStatements=true&loc=Local",
+            config.Get("database.postgres.username"),
+            config.Get("database.postgres.password"),
+            config.Get("database.postgres.host"),
+            config.Get("database.postgres.port"),
+            config.Get("database.postgres.database"),
+            config.Get("database.postgres.charset"),
+        )
+        dbConfig = postgres.New(postgres.Config{
             DSN: dsn,
         })
     case "sqlite":

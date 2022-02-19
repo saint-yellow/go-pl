@@ -26,6 +26,18 @@ func init() {
                 "max_life_seconds":     config.Env("DB_MAX_LIFE_SECONDS", 5*60),
             },
 
+            "postgres": map[string]interface{}{
+                "host":     config.Env("DB_HOST", "127.0.0.1"),
+                "port":     config.Env("DB_PORT", "5432"),
+                "database": config.Env("DB_DATABASE", "gohub"),
+                "username": config.Env("DB_USERNAME", "postgres"),
+                "password": config.Env("DB_PASSWORD", "saint-yellow"),
+
+                "max_idle_connections": config.Env("DB_MAX_IDLE_CONNECTIONS", 100),
+                "max_open_connections": config.Env("DB_MAX_OPEN_CONNECTIONS", 25),
+                "max_life_seconds":     config.Env("DB_MAX_LIFE_SECONDS", 5*60),
+            },
+
             "sqlite": map[string]interface{}{
                 "database": config.Env("DB_SQL_FILE", "database/database.db"),
             },
