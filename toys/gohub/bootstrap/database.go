@@ -32,18 +32,17 @@ func setupDatabase() {
         dbConfig = mysql.New(mysql.Config{
             DSN: dsn,
         })
-    case "postgres":
+    case "postgresql":
         // 构建 DSN 信息
-        dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=%v&parseTime=True&multiStatements=true&loc=Local",
-            config.Get("database.postgres.username"),
-            config.Get("database.postgres.password"),
-            config.Get("database.postgres.host"),
-            config.Get("database.postgres.port"),
-            config.Get("database.postgres.database"),
-            config.Get("database.postgres.charset"),
+        dsn := fmt.Sprintf("user=%v password=%v dbname=%v port=%v sslmode=disable TimeZone=Asia/Shanghai",
+            config.Get("database.postgresql.username"),
+            config.Get("database.postgresql.password"),
+            config.Get("database.postgresql.database"),
+            config.Get("database.postgresql.port"),
         )
         dbConfig = postgres.New(postgres.Config{
             DSN: dsn,
+
         })
     case "sqlite":
         // 初始化 sqlite
